@@ -21,5 +21,11 @@ public function save_book2(Request $request)
         return $request->id;
        
 }
+
+public function save_book3(Request $request)
+{
+       // dd($request->all()); 
+       return $request->id;
+}
     
 }

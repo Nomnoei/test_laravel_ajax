@@ -124,6 +124,12 @@
 
                     <div id="msd"></div> <!-----------------แสดงผล-->
 
+                    <form action="{{url('/save-book3')}}" method="POST">
+                        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+                        <input type="text" name="id">
+                        <input type="submit" value="กด">
+                    </form>
+
 
             <div class="content">
                 <div class="title m-b-md">
