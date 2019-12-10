@@ -1,4 +1,5 @@
 <?php
+use GuzzleHttp\Client;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,3 +48,15 @@ Route::get('/modal/deleteall','ModalController@DeleteSesstion');
 Route::get('/modal/delete/{id}','ModalController@Deleterow');
 
 Route::post('/modal/edit/{id}','ModalController@editrow');
+
+Route::get('/json-api', function() {
+  return redirect()->away('http://127.0.0.1:8080/api/users');
+});
+
+Route::get('/testapi2/select','Test2Controller@select');
+
+Route::get('/testapi2/insert','Test2Controller@insert');
+
+Route::get('/testapi2/delete/{id}','Test2Controller@delete');
+
+Route::get('/testapi2/update/{id}','Test2Controller@updateapi');
