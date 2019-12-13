@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 //use GuzzleHttp\Client;
+//use guzzlehttp client laravel install
+// composer require guzzlehttp/guzzle
 
 
 class Test2Controller extends Controller
@@ -15,8 +18,15 @@ class Test2Controller extends Controller
      */
     public function index()
     {
-
-  //dd($data2);
+      $provinces = DB::select('select * from province');
+      //dd($provinces);
+      $client = new \Guzzle\Service\Client('http://127.0.0.1:8080/api/');
+      $response = $client->get("users/")->send();
+      $data = $response->getBody();
+      $data2 = json_decode($data);
+      //dd($data2);
+      //print_r($data2);
+      return view("api.select",compact(['data2','provinces']));
 
     }
 
@@ -27,7 +37,7 @@ class Test2Controller extends Controller
      */
     public function create()
     {
-        //
+        return view("api.insert");
     }
 
     /**
@@ -38,7 +48,7 @@ class Test2Controller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return "ตรงนี้";
     }
 
     /**
@@ -92,7 +102,9 @@ class Test2Controller extends Controller
     $response = $client->get("users/")->send();
     $data = $response->getBody();
     $data2 = json_decode($data);
-    dd($data2);
+    //dd($data2);
+    //print_r($data2);
+    return view("api.select",compact('data2'));
     }
 
     public function delete($id){
@@ -100,28 +112,34 @@ class Test2Controller extends Controller
       $response = $client->delete("users/$id")->send();
       $data = $response->getBody();
       $data2 = json_decode($data);
-      dd($data2);
+      return redirect('testapi2');
+      //dd($data2);
 
     }
-    public function insert(){
+    public function insert(Request $request){
+      //dd($request->all());
+
+
       $client = new \GuzzleHttp\Client();
      $response = $client->request('POST', 'http://127.0.0.1:8080/api/users/', [
-                    'form_params' => ['name'=> 'joja',
-                                        'city' => 'cm']
+                    'form_params' => ['name'=> $request->name,
+                                        'city' => $request->city]
                 ]);
-                echo $response->getStatusCode();
-                      echo $response->getBody();
+                // echo $response->getStatusCode();
+                // echo $response->getBody();
 
 
     $data = $response->getBody();
     $data2 = json_decode($data);
+    return redirect('testapi2');
     }
 
-    public function updateapi($id){
+    public function updateapi(Request $request){
+      //dd($request->all());
       $client = new \GuzzleHttp\Client();
-     $response = $client->request('PUT', 'http://127.0.0.1:8080/api/users/$id', [
-                    'form_params' => ['name'=> 'joja',
-                                        'city' => 'cm']
+     $response = $client->request('PUT', 'http://127.0.0.1:8080/api/users/'.$request->id, [
+                    'form_params' => ['name'=> $request->name,
+                                        'city' => $request->city]
                 ]);
                 echo $response->getStatusCode();
                       echo $response->getBody();
@@ -129,5 +147,6 @@ class Test2Controller extends Controller
 
     $data = $response->getBody();
     $data2 = json_decode($data);
+    return redirect('testapi2');
     }
 }

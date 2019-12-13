@@ -53,10 +53,12 @@ Route::get('/json-api', function() {
   return redirect()->away('http://127.0.0.1:8080/api/users');
 });
 
+Route::resource('testapi2','Test2Controller');
+
 Route::get('/testapi2/select','Test2Controller@select');
 
-Route::get('/testapi2/insert','Test2Controller@insert');
+Route::post('/testapi2/insert','Test2Controller@insert');
 
 Route::get('/testapi2/delete/{id}','Test2Controller@delete');
 
-Route::get('/testapi2/update/{id}','Test2Controller@updateapi');
+Route::post('/testapi2/updateapi','Test2Controller@updateapi');
